@@ -3,6 +3,7 @@ package com.fzs.sula.api.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fzs.sula.api.model.User;
 import com.fzs.sula.api.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +20,19 @@ import java.io.IOException;
 public class UserController {
     private final UserService userService;
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUsers() throws JsonProcessingException {
         return userService.getUsers();
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/details/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUser(@PathVariable(value = "id") Long id) throws JsonProcessingException {
         return userService.getUser(id);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/details/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUser(@PathVariable(value = "username") String username) throws JsonProcessingException {
         return userService.getUser(username);
@@ -39,7 +43,7 @@ public class UserController {
        return userService.createUser(user);
     }
 
-
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateUser (@PathVariable(value = "id") Long id, @Valid @RequestBody User user){
         return userService.updateUser(user, id);

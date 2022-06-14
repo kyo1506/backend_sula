@@ -56,18 +56,21 @@ public class UserService implements UserDetailsService {
             return new ResponseEntity<>(objectMapper.writeValueAsString(usersList), HttpStatus.OK);
         } else return new ResponseEntity<>("Não há users cadastrados!", HttpStatus.NOT_FOUND);
     }
+
     public ResponseEntity<Object> getUser(Long id) throws JsonProcessingException {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(user), HttpStatus.OK);
         }else return new ResponseEntity<>("User não encontrado!", HttpStatus.NOT_FOUND);
     }
+
     public ResponseEntity<Object> getUser(String username) throws JsonProcessingException {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(user), HttpStatus.OK);
         }else return new ResponseEntity<>("User não encontrado!", HttpStatus.NOT_FOUND);
     }
+
     public ResponseEntity<Object> createUser(User model){
         if (!userRepository.existsByUsername(model.getUsername())) {
             User user = new User();
@@ -82,6 +85,7 @@ public class UserService implements UserDetailsService {
             else return new ResponseEntity<>("Ocorreu um erro durante o processamento!", HttpStatus.INTERNAL_SERVER_ERROR);
         }else return new ResponseEntity<>("Já existe um tipo de atividade com esse nome!", HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
     public ResponseEntity<Object> updateUser(User model, Long id){
         if (userRepository.findById(id).isPresent()){
             User user = userRepository.findById(id).get();

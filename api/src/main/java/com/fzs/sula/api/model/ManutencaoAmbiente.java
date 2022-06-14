@@ -8,25 +8,26 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Curso implements Serializable {
+public class ManutencaoAmbiente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 50, nullable = false)
-    private String nome;
-    @OneToMany(
-            targetEntity = Materia.class,
-            fetch = FetchType.EAGER,
+    @ManyToOne(
+            targetEntity = Ambiente.class,
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Materia> materias;
-    private Boolean ativo = true;
+    private Ambiente ambiente;
+    private Boolean concluido = false;
+    @Column(nullable = false)
+    private LocalDateTime dtInicio;
+    @Column(nullable = false)
+    private LocalDateTime dtFim;
     private LocalDateTime createdOn = LocalDateTime.now();
     private LocalDateTime updatedOn;
 }

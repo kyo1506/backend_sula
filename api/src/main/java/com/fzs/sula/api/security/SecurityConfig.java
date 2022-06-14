@@ -31,6 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
@@ -49,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers(POST,"/user/login", "/user/create").permitAll()
                     .antMatchers(GET,"/user/refresh/token").permitAll()
+                    .antMatchers(AUTH_WHITELIST).permitAll()
                     .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
                     .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest()

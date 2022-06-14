@@ -1,5 +1,6 @@
 package com.fzs.sula.api.model;
 
+import com.fzs.sula.api.enums.Semestre;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +15,16 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role implements Serializable {
+public class Materia implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 50, nullable = false)
-    private String name;
+    private String nome;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Semestre semestre;
+    private Boolean ativo = true;
     private LocalDateTime createdOn = LocalDateTime.now();
+    private LocalDateTime updatedOn;
 }

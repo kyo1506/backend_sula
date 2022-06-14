@@ -19,7 +19,7 @@ import java.util.Collection;
 @Table(name = "\"user\"")
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 100, nullable = false)
     private String name;
@@ -30,7 +30,10 @@ public class User implements Serializable {
     @Column(length = 100, nullable = false)
     private String password;
     private Boolean active = true;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(
+            targetEntity = Role.class,
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Collection<Role> roles = new ArrayList<>();
     private LocalDateTime createdOn = LocalDateTime.now();
     private LocalDateTime updatedOn;

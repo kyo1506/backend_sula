@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Materia {
-    HOME("Home"),
-    MOBILE("Mobile"),
-    COMMERCIAL("Commercial");
+public enum Caracteristica {
+    WIFI("Wi-Fi"),
+    PROJETOR("Projetor"),
+    DATACENTER("Datacenter");
     private final String description;
 }
