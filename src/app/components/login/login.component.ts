@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
   goLog(){
     if(this.userName==="Admin"){
-      this.router.navigate(['/admin/adms']);
+      this.router.navigate(['/admin']);
     }
     if(this.userName==="Professor"){
       this.router.navigate(['/control'])

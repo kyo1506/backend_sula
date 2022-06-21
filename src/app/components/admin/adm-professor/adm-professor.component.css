@@ -1,61 +1,33 @@
-.header-container{
-    background-color: rgb(0, 0, 0);   
-}
-.header-text{
-    padding-top: 1%;
-    padding-left: 8vh;
-    padding-bottom: 1%;
-    font: 25px verdana;
-    color: white;
-    font-weight: 550;
-}
-.side-box{
-    width: 15vh;
-    height: 100%;
-    background-color: black;
-    border: 15px solid rgb(0, 0, 0);
-}
-.side-tile{
-    background-color: black;
-}
-.list{
+.input-tile{
     position: absolute;
-    top: 40px;
+    top: 5%;
+    left: 5%;
+    width: 300px;
 }
-.side-list {
-    padding-bottom: 50vh;
-    padding-left: 1vh;
-    padding-right: 1vh;
-  }
-
-.sideButton{
-    padding: 1vh;
-    font: 15px verdana;
-    color: white;
+.button-tile{
+    position:absolute;
+    top:5%;
+    left:25%;
 }
-.sideButton:hover{
-    color: rgb(240, 93, 93);
-}
-.tile {
-    padding-left: 7vh;
+.table-tile{
+    position: absolute;
+    top:15%;
+    left:5%;
+    width: 40%;
 }
 .input{
     min-width: 150px;
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
 }
 .busca{
-    padding-left: 7vh;
-    padding-top: 10vh;
     width: 100%;
 }
-.main-button{
-    padding-top: 10vh;
-    padding-left: 10vh;
-}
+
 .button{
     margin-left: 1vh;
 }
 table {
+    max-width: 600px;
     width: 100%;
   }

@@ -7,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  navigate: any;
+  sal="Sala";
+  pro="Professor";
+  con="Config";
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { this.navigate="Sala"; }
+
+  sideGoSala(){ this.navigate="Sala"; }
+  sideGoProf(){ this.navigate="Professor"; }
+  sideGoConfig(){ this.navigate="Config"; }
 }

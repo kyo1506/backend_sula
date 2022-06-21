@@ -1,0 +1,32 @@
+<header class="header-container">
+    <div class="header-text">
+        Admin
+    </div>
+</header>
+
+<body>
+    <mat-grid-list name="grid" cols="16" rowHeight="100%">
+        <mat-grid-tile class="side-tile" [colspan]="1" [rowspan]="1">
+            <mat-list class="list" role="list">
+                <mat-list-item role="listitem"><button mat-button class="sideButton"
+                        (click)="sideGoSala()">Salas</button>
+                </mat-list-item>
+                <mat-list-item role="listitem"><button mat-button class="sideButton"
+                        (click)="sideGoProf()">Professores</button></mat-list-item>
+                <mat-list-item role="listitem"><button mat-button class="sideButton"
+                        (click)="sideGoConfig()">Configurações</button></mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="15" [rowspan]="1">
+            <div *ngIf="navigate==con">
+                <app-adm-config></app-adm-config>
+            </div>
+            <div *ngIf="navigate==pro">
+                <app-adm-professor></app-adm-professor>
+            </div>
+            <div *ngIf="navigate==sal">
+                <app-adm-sala></app-adm-sala>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</body>
