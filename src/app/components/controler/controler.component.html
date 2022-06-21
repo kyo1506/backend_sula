@@ -1,0 +1,143 @@
+<header class="header-container">
+  <div class="header-text">
+    Control
+  </div>
+</header>
+
+<body>
+  <mat-grid-list name="grid" cols="16" rowHeight="7vh">
+    <mat-grid-tile class="tile" [colspan]="2" [rowspan]="2"></mat-grid-tile>
+    <mat-grid-tile class="tile" [colspan]="2" [rowspan]="2">
+      <button mat-raised-button color="primary" (click)="newAgeMod()">Novo Agendamento</button>
+    </mat-grid-tile>
+    <mat-grid-tile class="tile" [colspan]="4" [rowspan]="2">
+      <div class="radio-button">
+        <mat-radio-group [(ngModel)]="tipoData">
+          <mat-radio-button *ngFor="let date of dates" [value]="date">{{date}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-grid-tile>
+
+    <div *ngIf="tipoData == sem">
+      <mat-grid-tile class="tile" [colspan]="8" [rowspan]="2"></mat-grid-tile>
+      <div>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Dom</mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Seg</mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Ter</mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Qua</mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Qui</mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Sex</mat-grid-tile>
+        <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Sab</mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      </div>
+      <div>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="2"></mat-grid-tile>
+        <mat-grid-tile class="tile-noaula" [colspan]="2" [rowspan]="2">19</mat-grid-tile>
+        <mat-grid-tile class="tile-aula" [colspan]="2" [rowspan]="2">20</mat-grid-tile>
+        <mat-grid-tile class="tile-noaula" [colspan]="2" [rowspan]="2">21</mat-grid-tile>
+        <mat-grid-tile class="tile-aula" [colspan]="2" [rowspan]="2">22</mat-grid-tile>
+        <mat-grid-tile class="tile-noaula" [colspan]="2" [rowspan]="2">23</mat-grid-tile>
+        <mat-grid-tile class="tile-aula" [colspan]="2" [rowspan]="2">24</mat-grid-tile>
+        <mat-grid-tile class="tile-noaula" [colspan]="2" [rowspan]="2">25</mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="2"></mat-grid-tile>
+      </div>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="6"></mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="2" [rowspan]="6"></mat-grid-tile>
+      <mat-grid-tile class="tile-lista-aula" [colspan]="2" [rowspan]="6">
+        <div>
+          <button mat-raised-button class="botao" (click)="openModal()" *ngFor="let horaseg of horasegs">{{horaseg.value}}</button>
+          <!--<p class="horario" *ngFor="let horaseg of horasegs">{{horaseg.value}} </p>-->
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="2" [rowspan]="6"></mat-grid-tile>
+      <mat-grid-tile class="tile-lista-aula" [colspan]="2" [rowspan]="6">
+        <div>
+          <button mat-raised-button class="botao" (click)="openModal()" *ngFor="let horaqua of horaquas">{{horaqua.value}}</button>
+         <!-- <p class="horario" *ngFor="let horaqua of horaquas">{{horaqua.value}}</p>-->
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="2" [rowspan]="6"></mat-grid-tile>
+      <mat-grid-tile class="tile-lista-aula" [colspan]="2" [rowspan]="6">
+        <div>
+          <button mat-raised-button class="botao" (click)="openModal()" *ngFor="let horasex of horasexs">{{horasex.value}}</button>
+          <!--<p class="horario" *ngFor="let horasex of horasexs">{{horasex.value}}</p>-->
+        </div>
+      </mat-grid-tile>
+    </div>
+
+    <div *ngIf="tipoData == men">
+      <mat-grid-tile class="tile" [colspan]="8" [rowspan]="2"></mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Dom</mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Seg</mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Ter</mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Qua</mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Qui</mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Sex</mat-grid-tile>
+      <mat-grid-tile class="tileSemana" [colspan]="2" [rowspan]="1">Sab</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileDiaMa" [colspan]="2" [rowspan]="1">29</mat-grid-tile>
+      <mat-grid-tile class="tileDiaMa" [colspan]="2" [rowspan]="1">30</mat-grid-tile>
+      <mat-grid-tile class="tileDiaMa" [colspan]="2" [rowspan]="1">31</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">1</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">2</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">3</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">4</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">5</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">6</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">7</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">8</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">9</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">10</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">11</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">12</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">13</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">14</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">15</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">16</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">17</mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">18</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileDiaP" [colspan]="2" [rowspan]="1">19</mat-grid-tile>
+      <mat-grid-tile class="tileDiaA" [colspan]="2" [rowspan]="1">20</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">21</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">22</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">23</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">24</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">25</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">26</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">27</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">28</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">29</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">30</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">1</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">2</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">12</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">13</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">14</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">15</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">16</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">17</mat-grid-tile>
+      <mat-grid-tile class="tileDia" [colspan]="2" [rowspan]="1">18</mat-grid-tile>
+      <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+    </div>
+
+  </mat-grid-list>
+</body>

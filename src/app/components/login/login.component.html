@@ -1,0 +1,40 @@
+<header class="header-container">
+    <div class="header-text">
+        Login
+    </div>
+</header>
+
+<body>
+    <mat-grid-list name="grid" cols="6" rowHeight="7vh">
+        <mat-grid-tile class="tile" [colspan]="6" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1">
+            <mat-form-field appearance="fill">
+                <mat-label>User Name</mat-label>
+                <input matInput [(ngModel)]="userName">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="4" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1">
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput type="password">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="4" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1">
+            <div class="example-button-row">
+              <button mat-raised-button color="primary" (click)="goLog()">Enter</button>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="4" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile class="tile" [colspan]="1" [rowspan]="1">
+            <div class="example-button-row">
+              <button mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</body>

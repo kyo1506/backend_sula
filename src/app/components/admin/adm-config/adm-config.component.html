@@ -1,0 +1,20 @@
+<header class="header-container">
+    <div class="header-text">
+        Admin-Configurações
+    </div>
+</header>
+
+<body>
+    <mat-grid-list name="grid" cols="16" rowHeight="7vh">
+        <mat-grid-tile class="side-tile" [colspan]="1" [rowspan]="11">
+            <mat-list class="list" role="list">
+                <mat-list-item role="listitem"><button mat-button class="sideButton" (click)="sideGoSala()">Salas</button>
+                </mat-list-item>
+                <mat-list-item role="listitem"><button mat-button class="sideButton"
+                        (click)="sideGoProf()">Professores</button></mat-list-item>
+                <mat-list-item role="listitem"><button mat-button class="sideButton"
+                        (click)="sideGoConfig()">Configurações</button></mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+    </mat-grid-list>
+</body>

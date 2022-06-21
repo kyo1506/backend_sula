@@ -1,0 +1,44 @@
+.header-container{
+    background-color: rgb(0, 0, 0);   
+}
+.header-text{
+    padding-top: 1%;
+    padding-left: 8vh;
+    padding-bottom: 1%;
+    font: 25px verdana;
+    color: white;
+    font-weight: 550;
+}
+.login{
+    float: right;
+    margin-right: 7vh;
+}
+.login:hover{
+    background-color: rgb(212, 209, 209);
+}
+.radio-button{
+    padding-left: 1vh;
+    padding-top: 1vh;
+}
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+.horario{
+    border: 3px solid black;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
+}
+.tileSemana{
+    background-color: rgb(207, 204, 204) !important;
+}
+.tileDiaMa{
+    background-color: rgb(160, 159, 159) !important;
+}
+.tileDiaP{
+    background-color: rgb(238, 183, 161) !important;
+}
+.tileDiaA{
+    background-color: rgb(170, 238, 161) !important;
+}

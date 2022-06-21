@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Novo Agendamento</h2>
+<mat-dialog-content class="mat-typography">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Escolha o curso</mat-label>
+      <mat-select>
+        <mat-option value="option1">ADS</mat-option>
+        <mat-option value="option2" >Logística</mat-option>
+        <mat-option value="option3">Gestão Empresarial</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Escolha a matéria</mat-label>
+      <mat-select>
+        <mat-option value="option1">matéria 1</mat-option>
+        <mat-option value="option2" >matéria 2</mat-option>
+        <mat-option value="option3">matéria 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Escolha sala</mat-label>
+      <mat-select>
+        <mat-option value="option1">Sala 1</mat-option>
+        <mat-option value="option2" >Sala 2</mat-option>
+        <mat-option value="option3">Sala 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Escolha a data</mat-label>
+      <mat-select>
+        <mat-option value="option1">dia</mat-option>
+        <mat-option value="option2">dia</mat-option>
+        <mat-option value="option3">dia</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Escolha o horário</mat-label>
+      <mat-select>
+        <mat-option value="option1">07:00</mat-option>
+        <mat-option value="option2">08:00</mat-option>
+        <mat-option value="option3">09:00</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="radio-button">
+    <mat-radio-group [(ngModel)]="tipoAgendamento">
+      <mat-radio-button *ngFor="let age of ages" [value]="age">{{age}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  </mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancela</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Confirma</button>
+</mat-dialog-actions>
