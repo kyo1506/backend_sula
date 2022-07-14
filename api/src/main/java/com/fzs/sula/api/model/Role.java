@@ -1,17 +1,19 @@
 package com.fzs.sula.api.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role implements Serializable {
@@ -21,4 +23,17 @@ public class Role implements Serializable {
     @Column(length = 50, nullable = false)
     private String name;
     private LocalDateTime createdOn = LocalDateTime.now();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Role role = (Role) o;
+        return id != null && Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

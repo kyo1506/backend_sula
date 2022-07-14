@@ -1,0 +1,70 @@
+package com.fzs.sula.api.service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fzs.sula.api.model.ManutencaoAmbiente;
+import com.fzs.sula.api.repository.ManutencaoAmbienteRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class ManutencaoAmbienteService {
+    private final ManutencaoAmbienteRepository manutencaoAmbienteRepository;
+    private final ObjectMapper objectMapper;
+
+    public ResponseEntity<Object> getManutencoesAmbiente() throws JsonProcessingException {
+        List<ManutencaoAmbiente> manutencoesList = manutencaoAmbienteRepository.findAll();
+        if (!manutencoesList.isEmpty()) {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencoesList), HttpStatus.OK);
+        } else return new ResponseEntity<>("Não há manutenções agendadas no sistema!", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Object> getManutencoesAmbienteByAmbienteId(Long id) throws JsonProcessingException {
+        List<ManutencaoAmbiente> manutencoesList = manutencaoAmbienteRepository.getManutencoesAmbiente(id);
+        if (!manutencoesList.isEmpty()) {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencoesList), HttpStatus.OK);
+        } else return new ResponseEntity<>("Não há manutenções agendadas para esse ambiente!", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Object> getManutencaoAmbiente(Long id) throws JsonProcessingException {
+        Optional<ManutencaoAmbiente> manutencaoAmbiente = manutencaoAmbienteRepository.findById(id);
+        if (manutencaoAmbiente.isPresent()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencaoAmbiente), HttpStatus.OK);
+        }else return new ResponseEntity<>("Manutenção não encontrada!", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Object> createManutencaoAmbiente(ManutencaoAmbiente model){
+        if (manutencaoAmbienteRepository.ManutencaoAmbienteExists(model.getAmbiente().getId(), model.getDtInicio(), model.getDtFim()) == null) {
+            ManutencaoAmbiente manutencaoAmbiente = new ManutencaoAmbiente();
+            manutencaoAmbiente.setAmbiente(model.getAmbiente());
+            manutencaoAmbiente.setDtInicio(model.getDtInicio());
+            manutencaoAmbiente.setDtFim(model.getDtFim());
+            ManutencaoAmbiente manutencaoAmbienteSalva = manutencaoAmbienteRepository.save(manutencaoAmbiente);
+            if (manutencaoAmbienteRepository.findById(manutencaoAmbienteSalva.getId()).isPresent())
+                return new ResponseEntity<>("Manutenção agendada com sucesso!", HttpStatus.OK);
+            else return new ResponseEntity<>("Ocorreu um erro durante o processamento!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }else return new ResponseEntity<>("Já existe uma manutenção agendada para essa sala neste horario!", HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    public ResponseEntity<Object> updateManutencaoAmbiente(ManutencaoAmbiente model, Long id){
+        if (manutencaoAmbienteRepository.findById(id).isPresent()){
+            ManutencaoAmbiente manutencaoAmbiente = manutencaoAmbienteRepository.findById(id).get();
+            manutencaoAmbiente.setAmbiente(model.getAmbiente());
+            manutencaoAmbiente.setDtInicio(model.getDtInicio());
+            manutencaoAmbiente.setDtFim(model.getDtFim());
+            manutencaoAmbiente.setConcluido(model.getConcluido());
+            manutencaoAmbiente.setUpdatedOn(LocalDateTime.now());
+            ManutencaoAmbiente manutencaoAmbienteSalva = manutencaoAmbienteRepository.save(manutencaoAmbiente);
+            if (manutencaoAmbienteRepository.findById(manutencaoAmbienteSalva.getId()).isPresent())
+                return new ResponseEntity<>("Manutenção atualizada com sucesso!", HttpStatus.OK);
+            else return new ResponseEntity<>("Ocorreu um erro durante o processamento!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }else return new ResponseEntity<>("Manutenção não encontrada!", HttpStatus.NOT_FOUND);
+    }
+}

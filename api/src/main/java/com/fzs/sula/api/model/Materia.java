@@ -2,17 +2,19 @@ package com.fzs.sula.api.model;
 
 import com.fzs.sula.api.enums.Semestre;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Materia implements Serializable {
@@ -27,4 +29,17 @@ public class Materia implements Serializable {
     private Boolean ativo = true;
     private LocalDateTime createdOn = LocalDateTime.now();
     private LocalDateTime updatedOn;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Materia materia = (Materia) o;
+        return id != null && Objects.equals(id, materia.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
