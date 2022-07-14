@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fzs.sula.api.model.Curso;
 import com.fzs.sula.api.service.CursoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,10 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/curso")
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @SecurityRequirement(name = "bearerAuth")
 public class CursoController {
-    private final CursoService cursoService;
+    private CursoService cursoService;
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getCursos() throws JsonProcessingException {

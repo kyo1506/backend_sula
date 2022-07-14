@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzs.sula.api.model.Curso;
 import com.fzs.sula.api.repository.CursoRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CursoService {
-    private final CursoRepository cursoRepository;
+    private CursoRepository cursoRepository;
     private final ObjectMapper objectMapper;
 
     public ResponseEntity<Object> getCursos() throws JsonProcessingException {

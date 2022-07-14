@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzs.sula.api.model.ManutencaoAmbiente;
 import com.fzs.sula.api.repository.ManutencaoAmbienteRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,22 +16,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ManutencaoAmbienteService {
-    private final ManutencaoAmbienteRepository manutencaoAmbienteRepository;
+    private ManutencaoAmbienteRepository manutencaoAmbienteRepository;
     private final ObjectMapper objectMapper;
 
     public ResponseEntity<Object> getManutencoesAmbiente() throws JsonProcessingException {
-        List<ManutencaoAmbiente> manutencoesList = manutencaoAmbienteRepository.findAll();
-        if (!manutencoesList.isEmpty()) {
-            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencoesList), HttpStatus.OK);
+        List<ManutencaoAmbiente> manutencoesAmbienteList = manutencaoAmbienteRepository.findAll();
+        if (!manutencoesAmbienteList.isEmpty()) {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencoesAmbienteList), HttpStatus.OK);
         } else return new ResponseEntity<>("Não há manutenções agendadas no sistema!", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<Object> getManutencoesAmbienteByAmbienteId(Long id) throws JsonProcessingException {
-        List<ManutencaoAmbiente> manutencoesList = manutencaoAmbienteRepository.getManutencoesAmbiente(id);
-        if (!manutencoesList.isEmpty()) {
-            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencoesList), HttpStatus.OK);
+    public ResponseEntity<Object> getManutencoesAmbienteAmbienteId(Long id) throws JsonProcessingException {
+        List<ManutencaoAmbiente> manutencoesAmbienteList = manutencaoAmbienteRepository.findAllByAmbiente_Id(id);
+        if (!manutencoesAmbienteList.isEmpty()) {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(manutencoesAmbienteList), HttpStatus.OK);
         } else return new ResponseEntity<>("Não há manutenções agendadas para esse ambiente!", HttpStatus.NOT_FOUND);
     }
 
@@ -41,7 +43,9 @@ public class ManutencaoAmbienteService {
     }
 
     public ResponseEntity<Object> createManutencaoAmbiente(ManutencaoAmbiente model){
-        if (manutencaoAmbienteRepository.ManutencaoAmbienteExists(model.getAmbiente().getId(), model.getDtInicio(), model.getDtFim()) == null) {
+        if (manutencaoAmbienteRepository.ManutencaoAmbienteExists(model.getAmbiente().getId(),
+                model.getDtInicio(),
+                model.getDtFim()) == null) {
             ManutencaoAmbiente manutencaoAmbiente = new ManutencaoAmbiente();
             manutencaoAmbiente.setAmbiente(model.getAmbiente());
             manutencaoAmbiente.setDtInicio(model.getDtInicio());
@@ -50,7 +54,7 @@ public class ManutencaoAmbienteService {
             if (manutencaoAmbienteRepository.findById(manutencaoAmbienteSalva.getId()).isPresent())
                 return new ResponseEntity<>("Manutenção agendada com sucesso!", HttpStatus.OK);
             else return new ResponseEntity<>("Ocorreu um erro durante o processamento!", HttpStatus.INTERNAL_SERVER_ERROR);
-        }else return new ResponseEntity<>("Já existe uma manutenção agendada para essa sala neste horario!", HttpStatus.UNPROCESSABLE_ENTITY);
+        }else return new ResponseEntity<>("Já existe uma manutenção agendada para essa sala neste horário!", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> updateManutencaoAmbiente(ManutencaoAmbiente model, Long id){

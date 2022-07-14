@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzs.sula.api.model.Materia;
 import com.fzs.sula.api.repository.MateriaRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class MateriaService {
-    private final MateriaRepository materiaRepository;
+    private MateriaRepository materiaRepository;
     private final ObjectMapper objectMapper;
 
     public ResponseEntity<Object> getMaterias() throws JsonProcessingException {

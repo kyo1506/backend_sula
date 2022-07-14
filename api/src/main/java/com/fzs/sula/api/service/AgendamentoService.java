@@ -2,10 +2,12 @@ package com.fzs.sula.api.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fzs.sula.api.enums.Semestre;
 import com.fzs.sula.api.model.Agendamento;
-import com.fzs.sula.api.model.Materia;
 import com.fzs.sula.api.repository.AgendamentoRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,20 +17,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AgendamentoService {
-    private final AgendamentoRepository agendamentoRepository;
+    private AgendamentoRepository agendamentoRepository;
     private final ObjectMapper objectMapper;
 
-    public ResponseEntity<Object> getAgendamentosByUser_Id(Long id) throws JsonProcessingException {
-        List<Agendamento> agendamentosList = agendamentoRepository.findAllByUser_Id(id);
+    public ResponseEntity<Object> getagendamentosCursoSemestre(Long id, Semestre semestre) throws JsonProcessingException {
+        List<Agendamento> agendamentosList = agendamentoRepository.findAllByCurso_IdAndMateria_Semestre(id, semestre);
         if (!agendamentosList.isEmpty()) {
             return new ResponseEntity<>(objectMapper.writeValueAsString(agendamentosList), HttpStatus.OK);
         } else return new ResponseEntity<>("Não há agendamentos cadastrados!", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<Object> getagendamentosCursoSemestre(Long id, Materia materia) throws JsonProcessingException {
-        List<Agendamento> agendamentosList = agendamentoRepository.agendamentosCursoSemestre(id, materia.getSemestre());
+    public ResponseEntity<Object> getAgendamentosUserId(Long id) throws JsonProcessingException {
+        List<Agendamento> agendamentosList = agendamentoRepository.findAllByUser_Id(id);
         if (!agendamentosList.isEmpty()) {
             return new ResponseEntity<>(objectMapper.writeValueAsString(agendamentosList), HttpStatus.OK);
         } else return new ResponseEntity<>("Não há agendamentos cadastrados!", HttpStatus.NOT_FOUND);

@@ -7,12 +7,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ManutencaoAmbienteRepository extends JpaRepository<ManutencaoAmbiente, Long> {
-    @Query("SELECT e FROM ManutencaoAmbiente e WHERE e.ambiente.id= (:id)")
-    List<ManutencaoAmbiente> getManutencoesAmbiente(@Param("id") Long id);
+    List<ManutencaoAmbiente> findAllByAmbiente_Id(Long id);
 
-    @Query("SELECT e.id FROM ManutencaoAmbiente e " +
-            "WHERE e.ambiente.id= (:id) and e.dtInicio= (:dtInicio) and e.dtFim= (:dtFim) and e.concluido= true")
-    Long ManutencaoAmbienteExists(@Param("id") Long id, @Param("dtInicio") LocalDateTime dtInicio, @Param("dtFim") LocalDateTime dtFim);
+    @Query("SELECT e FROM ManutencaoAmbiente e " +
+            "WHERE e.ambiente.id= (:id) and e.dtInicio= (:dtInicio) and e.dtFim= (:dtFim) and e.concluido = true")
+    Optional<ManutencaoAmbiente> ManutencaoAmbienteExists(@Param("ambiente") Long id, @Param("dtInicio") LocalDateTime dtInicio, @Param("dtFim") LocalDateTime dtFim);
 }

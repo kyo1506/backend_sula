@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fzs.sula.api.model.User;
 import com.fzs.sula.api.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,9 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
-    private final UserService userService;
+    private UserService userService;
 
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
