@@ -10,7 +10,6 @@ import com.fzs.sula.api.model.Role;
 import com.fzs.sula.api.model.User;
 import com.fzs.sula.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -93,18 +91,17 @@ public class UserService implements UserDetailsService {
             User user = userRepository.findById(id).get();
             user.setName(model.getName());
             user.setEmail(model.getEmail());
-            user.setActive(model.getActive());
             user.setUsername(model.getUsername());
             if (!user.getPassword().equals(model.getPassword()))
                 user.setPassword(passwordEncoder.encode(model.getPassword()));
             user.setRoles(model.getRoles());
-            user.setUpdatedOn(LocalDateTime.now());
             User userSalvo = userRepository.save(user);
             if (userRepository.findById(userSalvo.getId()).isPresent())
                 return new ResponseEntity<>("User atualizado com sucesso!", HttpStatus.OK);
             else return new ResponseEntity<>("Ocorreu um erro durante o processamento!", HttpStatus.INTERNAL_SERVER_ERROR);
         }else return new ResponseEntity<>("User não encontrado!", HttpStatus.NOT_FOUND);
     }
+
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){

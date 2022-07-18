@@ -5,7 +5,6 @@ import com.fzs.sula.api.model.Materia;
 import com.fzs.sula.api.service.MateriaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

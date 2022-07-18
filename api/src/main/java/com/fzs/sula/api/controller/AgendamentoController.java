@@ -6,7 +6,6 @@ import com.fzs.sula.api.model.Agendamento;
 import com.fzs.sula.api.service.AgendamentoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -43,9 +43,10 @@ public class ManutencaoAmbienteService {
     }
 
     public ResponseEntity<Object> createManutencaoAmbiente(ManutencaoAmbiente model){
-        if (manutencaoAmbienteRepository.ManutencaoAmbienteExists(model.getAmbiente().getId(),
+        if ((manutencaoAmbienteRepository.existsManutencao(
+                model.getAmbiente().getId(),
                 model.getDtInicio(),
-                model.getDtFim()) == null) {
+                model.getDtFim()).getId()) == null) {
             ManutencaoAmbiente manutencaoAmbiente = new ManutencaoAmbiente();
             manutencaoAmbiente.setAmbiente(model.getAmbiente());
             manutencaoAmbiente.setDtInicio(model.getDtInicio());
