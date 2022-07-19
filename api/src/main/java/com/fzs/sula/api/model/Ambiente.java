@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -38,6 +40,6 @@ public class Ambiente implements Serializable {
     private String referencia;
     private Long numero;
     private Boolean ativo = true;
-    private LocalDateTime createdOn = LocalDateTime.now();
-    private LocalDateTime updatedOn;
+    private Timestamp createdOn = Timestamp.from(Instant.now());
+    private Timestamp updatedOn;
 }

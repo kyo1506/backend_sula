@@ -28,13 +28,13 @@ public class UserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping(value = "/details/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/details/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUser(@PathVariable(value = "id") Long id) throws JsonProcessingException {
         return userService.getUser(id);
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping(value = "/details/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/details/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUser(@PathVariable(value = "username") String username) throws JsonProcessingException {
         return userService.getUser(username);
     }

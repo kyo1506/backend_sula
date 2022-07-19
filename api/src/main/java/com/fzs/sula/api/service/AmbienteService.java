@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +43,8 @@ public class AmbienteService {
             ambiente.setTipoAmbiente(model.getTipoAmbiente());
             ambiente.setCaracteristicas(model.getCaracteristicas());
             ambiente.setDisponibilidades(model.getDisponibilidades());
+            ambiente.setReferencia(model.getReferencia());
+            ambiente.setNumero(model.getNumero());
             Ambiente ambienteSalvo = ambienteRepository.save(ambiente);
             if (ambienteRepository.findById(ambienteSalvo.getId()).isPresent())
                 return new ResponseEntity<>("Ambiente cadastrado com sucesso!", HttpStatus.OK);
@@ -54,9 +58,11 @@ public class AmbienteService {
             ambiente.setNome(model.getNome());
             ambiente.setAtivo(model.getAtivo());
             ambiente.setTipoAmbiente(model.getTipoAmbiente());
-            ambiente.setCaracteristicas(ambiente.getCaracteristicas());
-            ambiente.setDisponibilidades(ambiente.getDisponibilidades());
-            ambiente.setUpdatedOn(LocalDateTime.now());
+            ambiente.setCaracteristicas(model.getCaracteristicas());
+            ambiente.setDisponibilidades(model.getDisponibilidades());
+            ambiente.setReferencia(model.getReferencia());
+            ambiente.setNumero(model.getNumero());
+            ambiente.setUpdatedOn(Timestamp.from(Instant.now()));
             Ambiente ambienteSalvo = ambienteRepository.save(ambiente);
             if (ambienteRepository.findById(ambienteSalvo.getId()).isPresent())
                 return new ResponseEntity<>("Ambiente atualizado com sucesso!", HttpStatus.OK);

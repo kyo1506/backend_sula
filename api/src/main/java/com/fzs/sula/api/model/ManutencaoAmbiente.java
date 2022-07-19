@@ -1,19 +1,19 @@
 package com.fzs.sula.api.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManutencaoAmbiente implements Serializable {
@@ -22,27 +22,14 @@ public class ManutencaoAmbiente implements Serializable {
     private Long id;
     @ManyToOne(
             targetEntity = Ambiente.class,
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Ambiente ambiente;
     private Boolean concluido = false;
     @Column(nullable = false)
-    private LocalDateTime dtInicio;
+    private Timestamp dtInicio;
     @Column(nullable = false)
-    private LocalDateTime dtFim;
-    private LocalDateTime createdOn = LocalDateTime.now();
-    private LocalDateTime updatedOn;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ManutencaoAmbiente that = (ManutencaoAmbiente) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+    private Timestamp dtFim;
+    private Timestamp createdOn = Timestamp.from(Instant.now());
+    private Timestamp updatedOn;
 }

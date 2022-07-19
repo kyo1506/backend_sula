@@ -27,6 +27,7 @@ public class User implements Serializable {
     @Column(length = 20, nullable = false)
     private String username;
     @Column(length = 100, nullable = false)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @ManyToMany(
             targetEntity = Role.class,

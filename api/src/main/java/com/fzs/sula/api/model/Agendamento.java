@@ -1,6 +1,5 @@
 package com.fzs.sula.api.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,9 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -23,30 +23,30 @@ public class Agendamento implements Serializable {
     private Long id;
     @ManyToOne(
             targetEntity = User.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private User user;
     @ManyToOne(
             targetEntity = Ambiente.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Ambiente ambiente;
     @ManyToOne(
             targetEntity = Curso.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Curso curso;
     @ManyToOne(
             targetEntity = Materia.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Materia materia;
     @Column(nullable = false)
-    private LocalDate data;
+    private Date data;
     @Column(nullable = false)
-    private LocalTime horarioInicio;
+    private Time horarioInicio;
     @Column(nullable = false)
-    private LocalTime horarioFim;
-    private LocalDateTime createdOn = LocalDateTime.now();
-    private LocalDateTime updatedOn;
+    private Time horarioFim;
+    private Timestamp createdOn = Timestamp.from(Instant.now());
+    private Timestamp updatedOn;
 }

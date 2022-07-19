@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,6 +27,6 @@ public class Materia implements Serializable {
     @Enumerated(EnumType.STRING)
     private Semestre semestre;
     private Boolean ativo = true;
-    private LocalDateTime createdOn = LocalDateTime.now();
-    private LocalDateTime updatedOn;
+    private Timestamp createdOn = Timestamp.from(Instant.now());
+    private Timestamp updatedOn;
 }

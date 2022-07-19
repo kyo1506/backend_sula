@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +51,7 @@ public class CursoService {
             curso.setNome(model.getNome());
             curso.setAtivo(model.getAtivo());
             curso.setMaterias(model.getMaterias());
-            curso.setUpdatedOn(LocalDateTime.now());
+            curso.setUpdatedOn(Timestamp.from(Instant.now()));
             Curso cursoSalvo = cursoRepository.save(curso);
             if (cursoRepository.findById(cursoSalvo.getId()).isPresent())
                 return new ResponseEntity<>("Curso atualizado com sucesso!", HttpStatus.OK);

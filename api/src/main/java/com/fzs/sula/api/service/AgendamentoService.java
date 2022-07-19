@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -43,11 +45,13 @@ public class AgendamentoService {
     }
 
     public ResponseEntity<Object> createAgendamentoUnico(Agendamento model){
-        if (agendamentoRepository.existsAgendamentoByAmbiente_IdAndDataAndHorarioInicioAndHorarioFim(
+        Optional<Agendamento> existsAgendamento = agendamentoRepository.findAgendamentoByAmbiente_IdAndDataAndHorarioInicioAndHorarioFim(
                 model.getAmbiente().getId(),
                 model.getData(),
                 model.getHorarioInicio(),
-                model.getHorarioFim())) {
+                model.getHorarioFim());
+
+        if (existsAgendamento.isEmpty()) {
             Agendamento agendamento = new Agendamento();
             agendamento.setAmbiente(model.getAmbiente());
             agendamento.setCurso(model.getCurso());
@@ -60,16 +64,18 @@ public class AgendamentoService {
             if (agendamentoRepository.findById(agendamentoSalvo.getId()).isPresent())
                 return new ResponseEntity<>("Agendamento cadastrado com sucesso!", HttpStatus.OK);
             else return new ResponseEntity<>("Ocorreu um erro durante o processamento!", HttpStatus.INTERNAL_SERVER_ERROR);
-        }else return new ResponseEntity<>("Já existe um agendamento com esse nome!", HttpStatus.UNPROCESSABLE_ENTITY);
+        }else return new ResponseEntity<>("Já existe um agendamento neste ambiente para o horário proposto!", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> createAgendamentoRecorrente(List<Agendamento> listModel){
         for(Agendamento rowAgendamento : listModel) {
-            if (agendamentoRepository.existsAgendamentoByAmbiente_IdAndDataAndHorarioInicioAndHorarioFim(
+            Optional<Agendamento> existsAgendamento = agendamentoRepository.findAgendamentoByAmbiente_IdAndDataAndHorarioInicioAndHorarioFim(
                     rowAgendamento.getAmbiente().getId(),
                     rowAgendamento.getData(),
                     rowAgendamento.getHorarioInicio(),
-                    rowAgendamento.getHorarioFim())) {
+                    rowAgendamento.getHorarioFim());
+
+            if (existsAgendamento.isEmpty()) {
                 Agendamento agendamento = new Agendamento();
                 agendamento.setAmbiente(rowAgendamento.getAmbiente());
                 agendamento.setCurso(rowAgendamento.getCurso());
@@ -97,7 +103,7 @@ public class AgendamentoService {
             agendamento.setData(model.getData());
             agendamento.setHorarioInicio(model.getHorarioInicio());
             agendamento.setHorarioFim(model.getHorarioFim());
-            agendamento.setUpdatedOn(LocalDateTime.now());
+            agendamento.setUpdatedOn(Timestamp.from(Instant.now()));
             Agendamento agendamentoSalvo = agendamentoRepository.save(agendamento);
             if (agendamentoRepository.findById(agendamentoSalvo.getId()).isPresent())
                 return new ResponseEntity<>("Agendamento atualizado com sucesso!", HttpStatus.OK);

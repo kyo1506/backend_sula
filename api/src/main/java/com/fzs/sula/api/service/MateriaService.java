@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +51,7 @@ public class MateriaService {
             materia.setNome(model.getNome());
             materia.setSemestre(model.getSemestre());
             materia.setAtivo(model.getAtivo());
-            materia.setUpdatedOn(LocalDateTime.now());
+            materia.setUpdatedOn(Timestamp.from(Instant.now()));
             Materia materiaSalva = materiaRepository.save(materia);
             if (materiaRepository.findById(materiaSalva.getId()).isPresent())
                 return new ResponseEntity<>("Materia atualizada com sucesso!", HttpStatus.OK);

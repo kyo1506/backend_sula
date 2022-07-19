@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,10 +25,10 @@ public class Curso implements Serializable {
     private String nome;
     @OneToMany(
             targetEntity = Materia.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Materia> materias;
     private Boolean ativo = true;
-    private LocalDateTime createdOn = LocalDateTime.now();
-    private LocalDateTime updatedOn;
+    private Timestamp createdOn = Timestamp.from(Instant.now());
+    private Timestamp updatedOn;
 }

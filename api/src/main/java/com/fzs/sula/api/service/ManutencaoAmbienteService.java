@@ -5,13 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzs.sula.api.model.ManutencaoAmbiente;
 import com.fzs.sula.api.repository.ManutencaoAmbienteRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,10 +46,12 @@ public class ManutencaoAmbienteService {
     }
 
     public ResponseEntity<Object> createManutencaoAmbiente(ManutencaoAmbiente model){
-        if ((manutencaoAmbienteRepository.existsManutencao(
+        Optional<ManutencaoAmbiente> existsManutencao = manutencaoAmbienteRepository.findManutencaoAmbienteByAmbiente_IdAndDtInicioAndDtFim(
                 model.getAmbiente().getId(),
                 model.getDtInicio(),
-                model.getDtFim()).getId()) == null) {
+                model.getDtFim());
+
+        if(existsManutencao.isEmpty() || !existsManutencao.get().getConcluido()){
             ManutencaoAmbiente manutencaoAmbiente = new ManutencaoAmbiente();
             manutencaoAmbiente.setAmbiente(model.getAmbiente());
             manutencaoAmbiente.setDtInicio(model.getDtInicio());
@@ -65,7 +70,7 @@ public class ManutencaoAmbienteService {
             manutencaoAmbiente.setDtInicio(model.getDtInicio());
             manutencaoAmbiente.setDtFim(model.getDtFim());
             manutencaoAmbiente.setConcluido(model.getConcluido());
-            manutencaoAmbiente.setUpdatedOn(LocalDateTime.now());
+            manutencaoAmbiente.setUpdatedOn(Timestamp.from(Instant.now()));
             ManutencaoAmbiente manutencaoAmbienteSalva = manutencaoAmbienteRepository.save(manutencaoAmbiente);
             if (manutencaoAmbienteRepository.findById(manutencaoAmbienteSalva.getId()).isPresent())
                 return new ResponseEntity<>("Manutenção atualizada com sucesso!", HttpStatus.OK);
