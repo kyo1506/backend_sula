@@ -51,7 +51,6 @@ public class SecurityConfig{
                     .antMatchers(POST,"/user/login", "/user/create").permitAll()
                     .antMatchers(GET,"/user/refresh/token").permitAll()
                     .antMatchers(AUTH_WHITELIST).permitAll()
-                    .antMatchers("/h2-console/**").permitAll()
                     .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
                     .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest()
@@ -59,6 +58,9 @@ public class SecurityConfig{
                 .and()
                 .logout()
                 .logoutSuccessUrl("/*");
+
+        http.headers().frameOptions().disable();
+
         return http.build();
     }
 
@@ -80,6 +82,7 @@ public class SecurityConfig{
 
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/h2-console/**"
     };
 }
