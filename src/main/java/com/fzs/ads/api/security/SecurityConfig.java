@@ -51,6 +51,7 @@ public class SecurityConfig{
                     .antMatchers(POST,"/user/login", "/user/create").permitAll()
                     .antMatchers(GET,"/user/refresh/token").permitAll()
                     .antMatchers(AUTH_WHITELIST).permitAll()
+                    .antMatchers("/h2-console/**").permitAll()
                     .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
                     .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest()
