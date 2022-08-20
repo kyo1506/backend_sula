@@ -51,11 +51,11 @@ public class Schedule implements Serializable {
     private Course course;
 
     @ManyToOne(
-            targetEntity = Matter.class,
+            targetEntity = Subject.class,
             fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @NotNull
-    private Matter matter;
+    private Subject subject;
 
 
     @Column(nullable = false)

@@ -1,6 +1,6 @@
 package com.fzs.ads.api.repository;
 
-import com.fzs.ads.api.enums.EMatterSemester;
+import com.fzs.ads.api.enums.ESubjectSemester;
 import com.fzs.ads.api.model.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface ScheduleRepository extends JpaRepository<Schedule, UUID> {
     List<Schedule> findAllByUser_Id(UUID id);
 
-    List<Schedule> findAllByCourse_IdAndAndMatter_Semester(UUID id, EMatterSemester semester);
+    List<Schedule> findAllByCourse_IdAndAndSubject_Semester(UUID id, ESubjectSemester semester);
 
     @Query("select a from Schedule a " +
             "where a.ambient.id = :id " +

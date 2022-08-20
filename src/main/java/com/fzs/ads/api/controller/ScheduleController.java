@@ -1,7 +1,7 @@
 package com.fzs.ads.api.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fzs.ads.api.enums.EMatterSemester;
+import com.fzs.ads.api.enums.ESubjectSemester;
 import com.fzs.ads.api.model.Schedule;
 import com.fzs.ads.api.service.ScheduleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -34,7 +34,7 @@ public class ScheduleController {
 
     @GetMapping(value = "/all/{id}/{semester}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> schedulesByCourseIdAndSemester(@PathVariable(value = "id") UUID id,
-                                                                @PathVariable(value = "semester") EMatterSemester semester) throws JsonProcessingException {
+                                                                @PathVariable(value = "semester") ESubjectSemester semester) throws JsonProcessingException {
         return scheduleService.schedulesByCourseIdAndSemester(id, semester);
     }
 

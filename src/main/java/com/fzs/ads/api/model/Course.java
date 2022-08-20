@@ -37,12 +37,12 @@ public class Course implements Serializable {
 
     @Column(nullable = false)
     @OneToMany(
-            targetEntity = Matter.class,
+            targetEntity = Subject.class,
             fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE})
 
     @NotNull
-    private List<Matter> matters;
+    private List<Subject> subjects;
 
     @Null
     private Boolean isActive = true;

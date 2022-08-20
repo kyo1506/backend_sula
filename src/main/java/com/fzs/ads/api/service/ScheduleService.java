@@ -2,7 +2,7 @@ package com.fzs.ads.api.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fzs.ads.api.enums.EMatterSemester;
+import com.fzs.ads.api.enums.ESubjectSemester;
 import com.fzs.ads.api.enums.ENotificationStatus;
 import com.fzs.ads.api.model.Notification;
 import com.fzs.ads.api.model.Schedule;
@@ -32,8 +32,8 @@ public class ScheduleService {
             return new ResponseEntity<>(objectMapper.writeValueAsString(schedulesList), HttpStatus.OK);
         } else return new ResponseEntity<>("There are no schedules registered", HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<Object> schedulesByCourseIdAndSemester(UUID id, EMatterSemester semester) throws JsonProcessingException {
-        var schedulesList = scheduleRepository.findAllByCourse_IdAndAndMatter_Semester(id, semester);
+    public ResponseEntity<Object> schedulesByCourseIdAndSemester(UUID id, ESubjectSemester semester) throws JsonProcessingException {
+        var schedulesList = scheduleRepository.findAllByCourse_IdAndAndSubject_Semester(id, semester);
         if (!schedulesList.isEmpty()) {
             return new ResponseEntity<>(objectMapper.writeValueAsString(schedulesList), HttpStatus.OK);
         } else return new ResponseEntity<>("Notifications not found", HttpStatus.NOT_FOUND);
@@ -63,7 +63,7 @@ public class ScheduleService {
             var schedule = new Schedule();
             schedule.setAmbient(model.getAmbient());
             schedule.setCourse(model.getCourse());
-            schedule.setMatter(model.getMatter());
+            schedule.setSubject(model.getSubject());
             schedule.setUser(model.getUser());
             schedule.setStartDate(model.getStartDate());
             schedule.setEndDate(model.getEndDate());
@@ -97,7 +97,7 @@ public class ScheduleService {
                 var schedule = new Schedule();
                 schedule.setAmbient(rowSchedule.getAmbient());
                 schedule.setCourse(rowSchedule.getCourse());
-                schedule.setMatter(rowSchedule.getMatter());
+                schedule.setSubject(rowSchedule.getSubject());
                 schedule.setUser(rowSchedule.getUser());
                 schedule.setStartDate(rowSchedule.getStartDate());
                 schedule.setEndDate(rowSchedule.getEndDate());
@@ -128,7 +128,7 @@ public class ScheduleService {
             var schedule = scheduleRepository.findById(id).get();
             schedule.setAmbient(model.getAmbient());
             schedule.setCourse(model.getCourse());
-            schedule.setMatter(model.getMatter());
+            schedule.setSubject(model.getSubject());
             schedule.setUser(model.getUser());
             schedule.setStartDate(model.getStartDate());
             schedule.setEndDate(model.getEndDate());

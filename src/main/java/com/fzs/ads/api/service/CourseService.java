@@ -38,7 +38,7 @@ public class CourseService {
         if (!courseRepository.existsCourseByName(model.getName())) {
             var course = new Course();
             course.setName(model.getName());
-            course.setMatters(model.getMatters());
+            course.setSubjects(model.getSubjects());
             Course courseSalvo = courseRepository.save(course);
             if (courseRepository.findById(courseSalvo.getId()).isPresent())
                 return new ResponseEntity<>("Course registered successfully!", HttpStatus.OK);
@@ -52,7 +52,7 @@ public class CourseService {
             Course course = courseRepository.findById(id).get();
             course.setName(model.getName());
             course.setIsActive(model.getIsActive());
-            course.setMatters(model.getMatters());
+            course.setSubjects(model.getSubjects());
             course.setUpdatedOn(Timestamp.from(Instant.now()));
             Course courseSalvo = courseRepository.save(course);
             if (courseRepository.findById(courseSalvo.getId()).isPresent())

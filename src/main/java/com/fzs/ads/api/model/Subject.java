@@ -1,6 +1,6 @@
 package com.fzs.ads.api.model;
 
-import com.fzs.ads.api.enums.EMatterSemester;
+import com.fzs.ads.api.enums.ESubjectSemester;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Matter implements Serializable {
+public class Subject implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -38,7 +38,7 @@ public class Matter implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @NotNull
-    private EMatterSemester semester;
+    private ESubjectSemester semester;
 
     @Null
     private Boolean isActive = true;

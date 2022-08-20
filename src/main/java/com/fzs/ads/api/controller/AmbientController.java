@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/ambiente")
+@RequestMapping("/ambient")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @SecurityRequirement(name = "bearerAuth")
 public class AmbientController {

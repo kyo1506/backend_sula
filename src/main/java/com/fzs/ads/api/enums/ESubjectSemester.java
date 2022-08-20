@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum EMatterSemester {
+public enum ESubjectSemester {
     FIRST("First"),
     SECOND("Second"),
     THIRD("Third"),
