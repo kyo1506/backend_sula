@@ -18,7 +18,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/schedule")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-@SecurityRequirement(name = "bearerAuth")
 public class ScheduleController {
     private ScheduleService scheduleService;
 
@@ -32,27 +31,32 @@ public class ScheduleController {
         return scheduleService.schedulesByUserId(id);
     }
 
+
     @GetMapping(value = "/all/{id}/{semester}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> schedulesByCourseIdAndSemester(@PathVariable(value = "id") UUID id,
                                                                 @PathVariable(value = "semester") ESubjectSemester semester) throws JsonProcessingException {
         return scheduleService.schedulesByCourseIdAndSemester(id, semester);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/details/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> scheduleById(@PathVariable(value = "id") UUID id) throws JsonProcessingException {
         return scheduleService.scheduleById(id);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping(value = "/create/unique", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createUniqueSchedule(@Valid @RequestBody Schedule schedule) {
         return scheduleService.createUniqueSchedule(schedule);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping(value = "/create/recurrent", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createRecurrentSchedule(@Valid @RequestBody List<Schedule> schedules) {
         return scheduleService.createRecurrentSchedule(schedules);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateSchedule(@PathVariable(value = "id") UUID id, @Valid @RequestBody Schedule schedule) {
         return scheduleService.updateSchedule(schedule, id);
