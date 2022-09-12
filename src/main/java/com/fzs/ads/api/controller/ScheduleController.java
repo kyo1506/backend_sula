@@ -26,12 +26,13 @@ public class ScheduleController {
         return scheduleService.schedules();
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/all/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> schedulesByUserId(@PathVariable(value = "id") UUID id) throws JsonProcessingException {
         return scheduleService.schedulesByUserId(id);
     }
 
-
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/all/{id}/{semester}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> schedulesByCourseIdAndSemester(@PathVariable(value = "id") UUID id,
                                                                 @PathVariable(value = "semester") ESubjectSemester semester) throws JsonProcessingException {
