@@ -50,10 +50,9 @@ public class SecurityConfig{
                 .authorizeRequests()
                     .antMatchers(POST,"/user/login", "/user/create").permitAll()
                     .antMatchers(GET,"/user/refresh/token").permitAll()
-                    .antMatchers(AUTH_WHITELIST).permitAll()
                     .antMatchers(GET, "/schedule/all").permitAll()
-                    /*.antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")
-                    .antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")*/
+                    .antMatchers(AUTH_WHITELIST).permitAll()
+                    /*.antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")*/
                 .anyRequest()
                 .authenticated()
                 .and()
