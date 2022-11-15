@@ -6,8 +6,8 @@ plugins {
 
 group = 'com.fzs.ads'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_18
+targetCompatibility = JavaVersion.VERSION_18
 
 configurations {
 	compileOnly {
