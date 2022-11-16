@@ -35,12 +35,9 @@ public class Course implements Serializable {
     @NotNull
     private String name;
 
-    @Column(nullable = false)
-    @OneToMany(
-            targetEntity = Subject.class,
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(name = "course_subject", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "subject_id"))
     @NotNull
     private List<Subject> subjects;
 
