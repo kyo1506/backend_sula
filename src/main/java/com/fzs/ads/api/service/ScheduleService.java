@@ -3,8 +3,6 @@ package com.fzs.ads.api.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzs.ads.api.enums.ESubjectSemester;
-import com.fzs.ads.api.enums.ENotificationStatus;
-import com.fzs.ads.api.model.Notification;
 import com.fzs.ads.api.model.Schedule;
 import com.fzs.ads.api.repository.ScheduleRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,7 +23,6 @@ import java.util.UUID;
 public class ScheduleService {
     private final ObjectMapper objectMapper;
     private ScheduleRepository scheduleRepository;
-    private NotificationService notificationService;
 
     public ResponseEntity<Object> schedules() throws JsonProcessingException {
         var schedulesList = scheduleRepository.findAll();
@@ -73,19 +71,12 @@ public class ScheduleService {
             else
                 return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            model.setId(existsSchedule.get().getId());
-            notificationService.createNotification(new Notification(
-                    UUID.randomUUID(),
-                    model,
-                    ENotificationStatus.PENDING,
-                    Timestamp.from(Instant.now()),
-                    null));
-            return new ResponseEntity<>("There was a time conflict, we forwarded the request to the admin", HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(existsSchedule, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     public ResponseEntity<Object> createRecurrentSchedule(List<Schedule> listModel) {
-        boolean haveConflict = false;
+        List<Schedule> errorList = new ArrayList<>();
 
         for (Schedule rowSchedule : listModel) {
             Optional<Schedule> existsSchedule = scheduleRepository.findScheduleByAmbient_IdAndStartDateAndEndDate(
@@ -105,22 +96,14 @@ public class ScheduleService {
                 if (scheduleRepository.findById(scheduleSalvo.getId()).isEmpty())
                     return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                rowSchedule.setId(existsSchedule.get().getId());
-                notificationService.createNotification(new Notification(
-                        UUID.randomUUID(),
-                        rowSchedule,
-                        ENotificationStatus.PENDING,
-                        Timestamp.from(Instant.now()),
-                        null));
-
-                haveConflict = true;
+                errorList.add(existsSchedule.get());
             }
         }
 
-        if (haveConflict) {
-            return new ResponseEntity<>("There was a time conflict, we forwarded the request to the admin", HttpStatus.OK);
-        } else
+        if (errorList.isEmpty()) {
             return new ResponseEntity<>("Schedules registered successfuly", HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(errorList, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> updateSchedule(Schedule model, UUID id) {

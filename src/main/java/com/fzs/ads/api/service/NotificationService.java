@@ -21,6 +21,8 @@ public class NotificationService {
     private final ObjectMapper objectMapper;
     private NotificationRepository notificationRepository;
 
+    private ScheduleService scheduleService;
+
     public ResponseEntity<Object> notifications() throws JsonProcessingException {
         var notificationsList = notificationRepository.findAll();
         if (!notificationsList.isEmpty()) {
@@ -43,7 +45,7 @@ public class NotificationService {
     }
 
     public ResponseEntity<Object> createNotification(Notification model) {
-        if (!notificationRepository.existsNotificationBySchedule(model.getSchedule(), ENotificationStatus.PENDING)) {
+        if (!notificationRepository.existsByScheduleAndStatus(model.getSchedule(), model.getStatus())) {
             var notification = new Notification();
             notification.setSchedule(model.getSchedule());
             notification.setStatus(model.getStatus());
@@ -61,7 +63,12 @@ public class NotificationService {
             notification.setSchedule(model.getSchedule());
             notification.setStatus(model.getStatus());
             notification.setUpdatedOn(Timestamp.from(Instant.now()));
+
+            if (notification.getStatus().equals(ENotificationStatus.APPROVED))
+                scheduleService.updateSchedule(model.getSchedule(), model.getSchedule().getId());
+
             Notification notificationSaved = notificationRepository.save(notification);
+
             if (notificationRepository.findById(notificationSaved.getId()).isPresent())
                 return new ResponseEntity<>("Notification updated successfuly", HttpStatus.OK);
             else

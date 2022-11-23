@@ -15,11 +15,5 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
             "where a.status = :status ")
     List<Notification> findAllByStatus(
             @Param("status") ENotificationStatus status);
-
-    @Query("select a from Notification a " +
-            "where a.schedule = :schedule and " +
-            "a.status = :status ")
-    boolean existsNotificationBySchedule(
-            @Param("schedule") Schedule schedule,
-            @Param("status") ENotificationStatus status);
+    boolean existsByScheduleAndStatus(Schedule schedule, ENotificationStatus status);
 }
