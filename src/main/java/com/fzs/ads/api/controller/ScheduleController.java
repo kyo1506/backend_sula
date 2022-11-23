@@ -35,7 +35,7 @@ public class ScheduleController {
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/all/{id}/{semester}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> schedulesByCourseIdAndSemester(@PathVariable(value = "id") UUID id,
-                                                                @PathVariable(value = "semester") ESubjectSemester semester) throws JsonProcessingException {
+                                                                 @PathVariable(value = "semester") ESubjectSemester semester) throws JsonProcessingException {
         return scheduleService.schedulesByCourseIdAndSemester(id, semester);
     }
 

@@ -44,7 +44,8 @@ public class SubjectService {
                 return new ResponseEntity<>("Subject successfully registered", HttpStatus.OK);
             else
                 return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
-        } else return new ResponseEntity<>("There is already a subject with that name", HttpStatus.UNPROCESSABLE_ENTITY);
+        } else
+            return new ResponseEntity<>("There is already a subject with that name", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> updateSubject(Subject model, UUID id) {

@@ -30,6 +30,7 @@ public class ScheduleService {
             return new ResponseEntity<>(objectMapper.writeValueAsString(schedulesList), HttpStatus.OK);
         } else return new ResponseEntity<>("There are no schedules registered", HttpStatus.NOT_FOUND);
     }
+
     public ResponseEntity<Object> schedulesByCourseIdAndSemester(UUID id, ESubjectSemester semester) throws JsonProcessingException {
         var schedulesList = scheduleRepository.findAllByCourse_IdAndAndSubject_Semester(id, semester);
         if (!schedulesList.isEmpty()) {

@@ -37,7 +37,7 @@ public class Course implements Serializable {
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "course_subject", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "subject_id"))
+            inverseJoinColumns = @JoinColumn(name = "subject_id"))
     @NotNull
     private List<Subject> subjects;
 

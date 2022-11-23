@@ -17,8 +17,8 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AmbientMaintenanceService {
-    private AmbientMaintenanceRepository ambientMaintenanceRepository;
     private final ObjectMapper objectMapper;
+    private AmbientMaintenanceRepository ambientMaintenanceRepository;
 
     public ResponseEntity<Object> ambientMaintenances() throws JsonProcessingException {
         var ambientMaintenancesList = ambientMaintenanceRepository.findAll();

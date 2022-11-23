@@ -54,7 +54,8 @@ public class NotificationService {
                 return new ResponseEntity<>("Notification inserted successfuly", HttpStatus.OK);
             else
                 return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
-        } else return new ResponseEntity<>("There is already an active notification for this schedule", HttpStatus.UNPROCESSABLE_ENTITY);
+        } else
+            return new ResponseEntity<>("There is already an active notification for this schedule", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> updateNotification(Notification model, UUID id) {

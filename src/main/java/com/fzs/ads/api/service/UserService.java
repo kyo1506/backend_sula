@@ -36,9 +36,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -85,7 +85,8 @@ public class UserService implements UserDetailsService {
             if (userRepository.findById(userSalvo.getId()).isPresent())
                 return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
             else return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
-        }else return new ResponseEntity<>("A record with that username already exists", HttpStatus.UNPROCESSABLE_ENTITY);
+        } else
+            return new ResponseEntity<>("A record with that username already exists", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> updateUser(User model, UUID id) {
@@ -102,13 +103,13 @@ public class UserService implements UserDetailsService {
             if (userRepository.findById(userSalvo.getId()).isPresent())
                 return new ResponseEntity<>("User successfully updated", HttpStatus.OK);
             else return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
-        }else return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
-            try{
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes(StandardCharsets.UTF_8));
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
@@ -126,7 +127,7 @@ public class UserService implements UserDetailsService {
                 tokens.put("refresh_token", refresh_token);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            }catch(Exception exception){
+            } catch (Exception exception) {
                 response.setHeader("error", exception.getMessage());
                 response.setStatus(FORBIDDEN.value());
                 Map<String, String> error = new HashMap<>();
@@ -134,7 +135,7 @@ public class UserService implements UserDetailsService {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
-        } else{
+        } else {
             throw new RuntimeException("Refresh token is missing");
         }
     }

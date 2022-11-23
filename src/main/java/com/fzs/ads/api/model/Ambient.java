@@ -24,6 +24,18 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ambient implements Serializable {
+    @ElementCollection(targetClass = EAmbientAvailability.class)
+    @CollectionTable
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    @Column(nullable = false)
+    Collection<EAmbientAvailability> availabilities;
+    @ElementCollection(targetClass = EAmbientCharacteristic.class)
+    @CollectionTable
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    @Column(nullable = false)
+    Collection<EAmbientCharacteristic> characteristics;
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -32,21 +44,6 @@ public class Ambient implements Serializable {
     @Size(min = 36, max = 36)
     @NotNull
     private UUID id;
-
-    @ElementCollection(targetClass = EAmbientAvailability.class)
-    @CollectionTable
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(nullable = false)
-    Collection<EAmbientAvailability> availabilities;
-
-    @ElementCollection(targetClass = EAmbientCharacteristic.class)
-    @CollectionTable
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(nullable = false)
-    Collection<EAmbientCharacteristic> characteristics;
-
     @Column(length = 50, nullable = false)
     @Size(min = 5, max = 50)
     @NotNull

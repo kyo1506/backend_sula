@@ -26,7 +26,12 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig{
+public class SecurityConfig {
+    private static final String[] AUTH_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -48,11 +53,11 @@ public class SecurityConfig{
                 .addFilter(customAuthenticationFilter)
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                    .antMatchers(POST,"/user/login", "/user/create").permitAll()
-                    .antMatchers(GET,"/user/refresh/token").permitAll()
-                    .antMatchers(GET, "/schedule/all").permitAll()
-                    .antMatchers(AUTH_WHITELIST).permitAll()
-                    /*.antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")*/
+                .antMatchers(POST, "/user/login", "/user/create").permitAll()
+                .antMatchers(GET, "/user/refresh/token").permitAll()
+                .antMatchers(GET, "/schedule/all").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                /*.antMatchers(GET, "api/user/**").hasAnyAuthority("ROLE_USER")*/
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -79,9 +84,4 @@ public class SecurityConfig{
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    private static final String[] AUTH_WHITELIST = {
-            "/v3/api-docs/**",
-            "/swagger-ui/**"
-    };
 }

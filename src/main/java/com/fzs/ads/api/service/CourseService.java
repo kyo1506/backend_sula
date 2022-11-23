@@ -17,8 +17,8 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CourseService {
-    private CourseRepository courseRepository;
     private final ObjectMapper objectMapper;
+    private CourseRepository courseRepository;
 
     public ResponseEntity<Object> courses() throws JsonProcessingException {
         var coursesList = courseRepository.findAll();
