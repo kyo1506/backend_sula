@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +29,9 @@ public class ScheduleController {
 
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping(value = "/all/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> schedulesByUserId(@PathVariable(value = "id") UUID id) throws JsonProcessingException {
-        return scheduleService.schedulesByUserId(id);
+    public ResponseEntity<Object> schedulesByUserId
+            (@PathVariable(value = "id") UUID id, @PathVariable(value = "startDate") Timestamp startDate) throws JsonProcessingException {
+        return scheduleService.schedulesByUser_IdAndStartDate(id, startDate);
     }
 
     @SecurityRequirement(name = "bearerAuth")
@@ -47,13 +49,13 @@ public class ScheduleController {
 
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping(value = "/create/unique", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> createUniqueSchedule(@Valid @RequestBody Schedule schedule) {
+    public ResponseEntity<Object> createUniqueSchedule(@Valid @RequestBody Schedule schedule) throws JsonProcessingException {
         return scheduleService.createUniqueSchedule(schedule);
     }
 
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping(value = "/create/recurrent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> createRecurrentSchedule(@Valid @RequestBody List<Schedule> schedules) {
+    public ResponseEntity<Object> createRecurrentSchedule(@Valid @RequestBody List<Schedule> schedules) throws JsonProcessingException {
         return scheduleService.createRecurrentSchedule(schedules);
     }
 

@@ -12,9 +12,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, UUID> {
-    List<Schedule> findAllByUser_Id(UUID id);
-
     List<Schedule> findAllByCourse_IdAndAndSubject_Semester(UUID id, ESubjectSemester semester);
+
+    List<Schedule> findAllByUser_IdAndStartDate(UUID id, Timestamp startDate);
 
     @Query("select a from Schedule a " +
             "where a.ambient.id = :id " +

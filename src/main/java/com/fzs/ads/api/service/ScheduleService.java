@@ -38,8 +38,8 @@ public class ScheduleService {
         } else return new ResponseEntity<>("Notifications not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<Object> schedulesByUserId(UUID id) throws JsonProcessingException {
-        var schedulesList = scheduleRepository.findAllByUser_Id(id);
+    public ResponseEntity<Object> schedulesByUser_IdAndStartDate(UUID id, Timestamp startDate) throws JsonProcessingException {
+        var schedulesList = scheduleRepository.findAllByUser_IdAndStartDate(id, startDate);
         if (!schedulesList.isEmpty()) {
             return new ResponseEntity<>(objectMapper.writeValueAsString(schedulesList), HttpStatus.OK);
         } else return new ResponseEntity<>("Notifications not found", HttpStatus.NOT_FOUND);
@@ -52,7 +52,7 @@ public class ScheduleService {
         } else return new ResponseEntity<>("Schedule not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<Object> createUniqueSchedule(Schedule model) {
+    public ResponseEntity<Object> createUniqueSchedule(Schedule model) throws JsonProcessingException {
         var existsSchedule = scheduleRepository.findScheduleByAmbient_IdAndStartDateAndEndDate(
                 model.getAmbient().getId(),
                 model.getStartDate(),
@@ -72,11 +72,11 @@ public class ScheduleService {
             else
                 return new ResponseEntity<>("An error occurred during processing", HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            return new ResponseEntity<>(existsSchedule, HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(objectMapper.writeValueAsString(existsSchedule), HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
-    public ResponseEntity<Object> createRecurrentSchedule(List<Schedule> listModel) {
+    public ResponseEntity<Object> createRecurrentSchedule(List<Schedule> listModel) throws JsonProcessingException {
         List<Schedule> errorList = new ArrayList<>();
 
         for (Schedule rowSchedule : listModel) {
@@ -104,7 +104,7 @@ public class ScheduleService {
         if (errorList.isEmpty()) {
             return new ResponseEntity<>("Schedules registered successfuly", HttpStatus.OK);
         } else
-            return new ResponseEntity<>(errorList, HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(objectMapper.writeValueAsString(errorList), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     public ResponseEntity<Object> updateSchedule(Schedule model, UUID id) {

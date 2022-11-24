@@ -20,7 +20,6 @@ import java.util.UUID;
 public class NotificationService {
     private final ObjectMapper objectMapper;
     private NotificationRepository notificationRepository;
-
     private ScheduleService scheduleService;
 
     public ResponseEntity<Object> notifications() throws JsonProcessingException {
