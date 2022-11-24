@@ -28,8 +28,8 @@ public class ScheduleController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping(value = "/all/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> schedulesByUserId
+    @GetMapping(value = "/all/{id}/{startDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> schedulesByUserIdAndStartDate
             (@PathVariable(value = "id") UUID id, @PathVariable(value = "startDate") Timestamp startDate) throws JsonProcessingException {
         return scheduleService.schedulesByUser_IdAndStartDate(id, startDate);
     }
